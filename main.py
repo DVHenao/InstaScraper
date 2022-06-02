@@ -31,8 +31,6 @@ def Excel1(listdata, csvTitle):
         writer.writerows(listdata)
 
 
-
-
 def Scroll():
     n_scrolls = 4
     for i in range(1, n_scrolls):
@@ -50,8 +48,8 @@ def LogIn():
     username.send_keys("vrplayinbot")
     password.send_keys("VRplay!n44")
 
-    #username.send_keys("introspectkid")
-    #password.send_keys("instagramNatalia44~")
+    # username.send_keys("introspectkid")
+    # password.send_keys("instagramNatalia44~")
 
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']"))).click()
@@ -72,7 +70,7 @@ def IterationTime(iteration, data):
         driver.switch_to.window(driver.window_handles[0])
 
         driver.get("https://www.instagram.com/explore/tags/" + data[x] + "/")
-        time.sleep(60)
+        time.sleep(30)
 
         Scroll()
 
@@ -98,27 +96,36 @@ def IterationTime(iteration, data):
 
             url = driver.current_url
             url = url[:-15]
-            driver.get(url)
-            time.sleep(3)
 
-            num = driver.find_elements \
-                (By.XPATH, "//*[@id='react-root']/section/main/div/header/section/ul/li[2]/a/div/span")
+            WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div[1]/div/div[1]/div/div/div[1]/div[1]/section/main/div[1]/div[1]/article/div/div[2]/div/div[2]/div[1]/ul/div/li/div/div/div[2]/h2/div/span/a'))).click()
+            url = driver.current_url
+            driver.get(url)
+            time.sleep(5)
+
+            num = driver.find_elements(By.XPATH, '/html/body/div[1]/div/div[1]/div/div[1]/div/div/div[1]/div[1]/section/main/div/header/section/ul/li[2]/a/div/span')
 
             if len(num) > 0:  # if num exists
                 if num[0].text != 0:  # if num is not 0
                     if len(num[0].text) == 3:
-                        followers = num[0].text.replace(',', '').replace('K', '000').replace('k', '000').replace('.', '').replace('m', '000000')
+                        followers = num[0].text.replace(',', '').replace('K', '000').replace('k', '000').replace('.',
+                                                                                                                 '').replace(
+                            'm', '000000')
                     else:
-                        followers = num[0].text.replace(',', '').replace('K', '00').replace('k', '00').replace('.', '').replace('m', '000000')
+                        followers = num[0].text.replace(',', '').replace('K', '00').replace('k', '00').replace('.',
+                                                                                                               '').replace(
+                            'm', '000000')
 
                 # Criteria handling
                 if 15000 > int(followers) > 900:
 
                     insta_name = url[26:]
                     hyperlink_name = '=HYPERLINK("' + url + '", "' + insta_name + '")'
-                    real_name_element = driver.find_elements(By.XPATH, "//*[@id='react-root']/section/main/div/header/section/div[2]/span")
+                    real_name_element = driver.find_elements(By.XPATH,
+                                                             "//*[@id='react-root']/section/main/div/header/section/div[2]/span")
 
-                    account_type_element = driver.find_elements(By.XPATH, "//*[@id='react-root']/section/main/div/header/section/div[2]/div[1]/div")
+                    account_type_element = driver.find_elements(By.XPATH,
+                                                                "//*[@id='react-root']/section/main/div/header/section/div[2]/div[1]/div")
 
                     if bool(account_type_element):
                         account_type = account_type_element[0].text
@@ -175,19 +182,21 @@ def CleanList(data):
 insta_link = "https://www.instagram.com/"
 hashtag = ["torontoinfluencer", "torontolife", "toronto", "torontostyle", "cntower", "nathanphilipssquare"]
 
-hashtag3 =[ "torontofood", "torontoblogger", "todotoronto", "torontophotographer"]
+hashtag3 = ["torontofood", "torontoblogger", "todotoronto", "torontophotographer"]
 
-hashtag4= ["downtowntoronto", "tastetoronto", "torontoeats", "torontocreator", "torontofashion",
+hashtag4 = ["downtowntoronto", "tastetoronto", "torontoeats", "torontocreator", "torontofashion",
             "torontoblogger", "yyzblogger", "torontofashionblogger"]
 
 hashtag_test = ["tastetoronto"]
 
 cleanout = ["restaurant", "store", "kitchen", "business", "fan page", "shop",
             "estate", "cafe", "eatery", "bakery", "pub", "bistro", "studio"
-            "jewelry", "outlet", "company", "bar", "organization", "org",
+                                                                   "jewelry", "outlet", "company", "bar",
+            "organization", "org",
             "retail", "agency", "fair", "event", "market", "buffet", "salon",
             "lease", "realtor", "broker", "lounge", "studio", "pizza", "cosmetic"
-            "clinic", "service", "product", "legal", "school", "catering", "bank",
+                                                                       "clinic", "service", "product", "legal",
+            "school", "catering", "bank",
             "brand", "liquor", "delivery", "cosmetic", "capital", "wedding", "earrings",
             "clinic", "center", "hotel", "motel", "resort"]
 
@@ -210,5 +219,5 @@ driver.execute_script("window.open('');")
 driver.switch_to.window(driver.window_handles[0])
 
 LogIn()
-IterationTime(len(hashtag3), hashtag3)
+IterationTime(len(hashtag), hashtag)
 CleanList(data_final)
