@@ -53,9 +53,6 @@ def LogIn():
     username.send_keys("vrplayinbot")
     password.send_keys("VRplay!n44")
 
-    #username.send_keys("introspectkid")
-    #password.send_keys("instaNatalia44~")
-
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']"))).click()
 
