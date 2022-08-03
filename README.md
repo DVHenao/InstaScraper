@@ -9,4 +9,4 @@ Jan30th
 
 
 for vrplayin, you will need to have chromedriver.exe stored somewhere on your pc and change the directory in main.py (line 237) to wherever you store it
-also you will need to install pip modules, pandas, bs4, selenium, csv (maybe more i dont remember)
+also you will need to install pip modules like: pandas, bs4, selenium, csv (maybe more i dont remember)
